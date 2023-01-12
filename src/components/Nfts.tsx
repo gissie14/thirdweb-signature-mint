@@ -18,7 +18,7 @@ import { getDefaultProvider } from "ethers";
 
 export const Nfts = () => {
   const COLLECTION_ADDRESS = process.env
-    .NEXT_PUBLIC_METAMASK_PRIVATE_KEY as string;
+    .NEXT_PUBLIC_COLLECTION_ADDRESS as string;
   const [loading, setLoading] = useState(false);
   const [nftMetadata, setNftMetadata] = useState([null]);
   const [fetchedNfts, setFetchedNfts] = useState(false);
