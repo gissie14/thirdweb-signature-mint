@@ -16,10 +16,10 @@ export default async function handler(
   let nfts = [
     {
       id: 0, // Unique ID for each NFT corresponding to its position in the array
-      name: "NFT 1", // A name for the NFT
-      description: "This is our first amazing NFT", // Description for the NFT
-      url: "https://bafybeihgfxd5f5sqili34vyjyfai6kezlagrya43e6bkgw6hnxucxug5ya.ipfs.nftstorage.link/", // URL for the NFT image
-      price: 0.01, // The price of the NFT
+      name: "test #0001", // A name for the NFT
+      description: "", // Description for the NFT
+      url: "https://gateway.ipfscdn.io/ipfs/QmcV9DgiC8acnuwNFsGDvSJt8v9GeBQkF3H1HMXjSHSzCo/0.png", // URL for the NFT image
+      price: 0, // The price of the NFT
       minted: false, // A variable to indicate if the NFT has been minted
     },
     {
