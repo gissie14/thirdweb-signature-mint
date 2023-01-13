@@ -24,7 +24,15 @@ export default async function handler(
     },
     {
       id: 1, // Unique ID for each NFT corresponding to its position in the array
-      name: "NFT 2", // A name for the NFT
+      name: "test #0002", // A name for the NFT
+      description: "This is our first amazing NFT", // Description for the NFT
+      url: "https://gateway.ipfscdn.io/ipfs/QmbckYbYB2e1Dx3mNGN15p6Howmj1MdjZ2vQyUT8bWEMQo/1.png", // URL for the NFT image
+      price: 0, // The price of the NFT
+      minted: false, // A variable to indicate if the NFT has been minted
+    },
+    {
+      id: 2, // Unique ID for each NFT corresponding to its position in the array
+      name: "test #0003", // A name for the NFT
       description: "This is our first amazing NFT", // Description for the NFT
       url: "https://bafybeihgfxd5f5sqili34vyjyfai6kezlagrya43e6bkgw6hnxucxug5ya.ipfs.nftstorage.link/", // URL for the NFT image
       price: 0.01, // The price of the NFT
@@ -80,13 +88,15 @@ export default async function handler(
       }
 
       // Allow the minting to happen anytime from now
-      const startTime = new Date(0);
+      // const startTime = new Date(0);
+      const startTime = new Date();
+      const endTime = new Date(Date.now() + 60 * 60 * 24 * 1000);
 
       // Find the NFT to mint in the array of NFT metadata using the ID
       const nftToMint = nfts[id];
 
       // Set up the NFT metadata for signature generation
-      const metadata: PayloadToSign721 = {
+      const payload: PayloadToSign721 = {
         metadata: {
           name: nftToMint.name,
           description: nftToMint.description,
@@ -95,18 +105,19 @@ export default async function handler(
           attributes: { id },
         },
         price: nftToMint.price,
+        // currencyAddress: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         mintStartTime: startTime,
+        // mintEndTime: endTime,
         to: address,
       };
-
       try {
-        const response = await nftCollection?.signature.generate(metadata);
-
+        const response = await nftCollection?.signature.generate(payload);
         // Respond with the payload and signature which will be used in the frontend to mint the NFT
-        res.status(201).json({
-          payload: response?.payload,
-          signature: response?.signature,
-        });
+        res.status(201).json(response);
+        // res.status(201).json({
+        //   payload: response?.payload,
+        //   signature: response?.signature,
+        // });
       } catch (error) {
         res.status(500).json({ error });
         console.error(error);

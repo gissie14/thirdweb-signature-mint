@@ -44,12 +44,11 @@ export const Nfts = () => {
   }, [loading]);
 
   // You can find your contract address in your dashboard after you have created an NFT Collection contract
-  const nftCollectionAddress = COLLECTION_ADDRESS;
 
   // Connect to contract using the address
   const nftCollection = useContract(
-    nftCollectionAddress,
-    "signature-drop"
+    COLLECTION_ADDRESS,
+    "nft-collection"
   ).contract;
   // const nftCollection = useContract(
   //   nftCollectionAddress,
@@ -59,20 +58,18 @@ export const Nfts = () => {
   // Function which generates signature and mints NFT
   const mintNft = async (id: number) => {
     setLoading(true);
-    connectWithMetamask;
-
-    const response = await fetch("/api/get-nfts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id, address }),
-    });
-    console.log("response a");
-    console.log(response);
-    const test = getDefaultProvider();
-    console.log("test");
-    console.log(test);
+    // const response = await fetch("/api/get-nfts", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ id, address }),
+    // });
+    // console.log("response a");
+    // console.log(response);
+    // const test = getDefaultProvider();
+    // console.log("test");
+    // console.log(test);
 
     try {
       // Call API to generate signature and payload for minting
@@ -91,10 +88,16 @@ export const Nfts = () => {
           signature: data.signature,
           payload: data.payload,
         };
-        console.log("mintInput");
-        console.log(mintInput);
+        // (await nftCollection.erc721.signature.generate(mintInput.payload));
+        const tx =
+          nftCollection && (await nftCollection.signature.mint(mintInput));
+        const receipt = tx && tx.receipt; // the mint transaction receipt
+        const mintedId = tx && tx.id; // the id of the NFT minted
 
-        nftCollection && (await nftCollection.signature.mint(mintInput));
+        console.log("successed?");
+        console.log(tx);
+        console.log(receipt);
+        console.log(mintedId);
 
         alert("NFT successfully minted!");
         setLoading(false);
