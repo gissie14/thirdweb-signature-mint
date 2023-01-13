@@ -88,6 +88,9 @@ export const Nfts = () => {
           signature: data.signature,
           payload: data.payload,
         };
+        console.log("mintInput");
+        console.log(mintInput);
+
         // (await nftCollection.erc721.signature.generate(mintInput.payload));
         const tx =
           nftCollection && (await nftCollection.signature.mint(mintInput));
